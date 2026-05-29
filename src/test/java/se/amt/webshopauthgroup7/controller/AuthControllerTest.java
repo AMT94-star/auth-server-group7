@@ -104,6 +104,6 @@ class AuthControllerTest {
                         post("/auth/login")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(wrongPwd))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 }
