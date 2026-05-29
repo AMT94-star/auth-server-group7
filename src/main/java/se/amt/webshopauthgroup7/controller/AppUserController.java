@@ -1,5 +1,6 @@
 package se.amt.webshopauthgroup7.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +28,7 @@ public class AppUserController {
 
     @PostMapping("/admins")
     @PreAuthorize("hasRole('ADMIN')")
-    public AppUser createAdmin(@RequestBody RegisterRequest registerRequest) {
+    public AppUser createAdmin(@Valid @RequestBody RegisterRequest registerRequest) {
         if (appUserRepository.existsByUsername(registerRequest.username())) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
