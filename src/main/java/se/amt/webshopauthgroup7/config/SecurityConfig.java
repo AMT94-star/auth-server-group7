@@ -42,7 +42,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableMethodSecurity //tillåter användning av @Preauthorize, dvs säkerthet
 public class SecurityConfig {
     private final String jwtIssuer;
     private final String jwtPublicKey;
@@ -63,9 +63,11 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(AppUserService appUserService) {
+        //hur en användare ska hämtas från db
         return username -> {
-            AppUser appUser = appUserService.findByUsername(username);
+            AppUser appUser = appUserService.findByUsername(username); //från db
 
+            //skapar new user
             return new User(
                     appUser.getUsername(),
                     appUser.getPassword(),
@@ -76,7 +78,7 @@ public class SecurityConfig {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); //hasha
     }
 
     @Bean
@@ -95,6 +97,7 @@ public class SecurityConfig {
                         .requestMatchers("/appusers").hasRole("ADMIN")
                         .requestMatchers("/appusers/admins").hasRole("ADMIN")
                         .anyRequest().authenticated())
+                //låter spring läsa jwt token
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 );
@@ -130,6 +133,7 @@ public class SecurityConfig {
         return new NimbusJwtEncoder(jwkSource);
     }
 
+    //la till decoder så att admin kan användas för admin endpoints
     @Bean
     public JwtDecoder jwtDecoder(KeyPair keyPair) {
         return NimbusJwtDecoder

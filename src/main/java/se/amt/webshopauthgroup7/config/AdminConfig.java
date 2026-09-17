@@ -38,6 +38,7 @@ public class AdminConfig {
     //lägga till authorize i swagger för admin access till appusers
     @Bean
     public OpenAPI customOpenAPI() {
+        //säkerhetslösning i swagger
         String securityName = "bearerAuth";
 
         return new OpenAPI()

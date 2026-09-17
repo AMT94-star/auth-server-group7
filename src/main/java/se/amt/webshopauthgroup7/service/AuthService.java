@@ -34,7 +34,7 @@ import java.util.Map;
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtEncoder jwtEncoder;
+    private final JwtEncoder jwtEncoder; //använda + signera token
     private final KeyPair keyPair;
     private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
@@ -76,23 +76,28 @@ public class AuthService {
 
         appUserRepository.save(appUser);
 
+        //hämtar roller
         List<String> roles = List.of("ROLE_" + appUser.getRole().name());
 
+        //sätter tid för token
         Instant now = Instant.now();
         Instant expiresAt = now.plus(jwtExpirationMinutes, ChronoUnit.MINUTES);
 
+        //jwt innehåll
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer(jwtIssuer)
                 .issuedAt(now)
                 .expiresAt(expiresAt)
                 .subject(appUser.getUsername())
                 .claim("roles", roles)
+                //lägger in roller så att spring kan avgöra rätt behörighet senare
                 .build();
 
         JwsHeader jwsHeader = JwsHeader.with(SignatureAlgorithm.RS256)
                 .keyId(jwtKeyId)
                 .build();
 
+        //skapar och signerar jwt token
         String accessToken = jwtEncoder.encode(
                 JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
 
@@ -109,6 +114,7 @@ public class AuthService {
                 )
         );
 
+        //hämtar inloggad användare + roll
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         List<String> roles = authentication.getAuthorities().stream()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())
@@ -123,7 +129,7 @@ public class AuthService {
                 .expiresAt(expiresAt)
                 .subject(principal.getUsername())
                 .claim("roles", roles);
-        JwsHeader jwsHeader = JwsHeader.with(SignatureAlgorithm.RS256)
+        JwsHeader jwsHeader = JwsHeader.with(SignatureAlgorithm.RS256) //RSA signering
                 .keyId(jwtKeyId)
                 .build();
 
@@ -140,6 +146,7 @@ public class AuthService {
     }
 
     public Map<String, Object> publicJwkSet() {
+        //gör om public key till JSON som vi sedan får tillgång till via /auth/jwks
         RSAKey rsaKey = new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
                 .keyID(jwtKeyId)
                 .build();
