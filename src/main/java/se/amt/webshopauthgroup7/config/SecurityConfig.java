@@ -26,6 +26,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.util.StringUtils;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import se.amt.webshopauthgroup7.model.AppUser;
 import se.amt.webshopauthgroup7.service.AppUserService;
 
@@ -39,6 +42,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.List;
+
 
 @Configuration
 @EnableWebSecurity
@@ -82,9 +86,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 "/auth/register",
@@ -102,6 +107,30 @@ public class SecurityConfig {
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 );
         return http.build();
+    }
+
+    @Bean
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        //frontend från dessa localhostportar får anropa
+        corsConfiguration.setAllowedOrigins(List.of(
+                "http://localhost:5173", "http://localhost:5174", "http://localhost:5175"));
+
+        //dem får bara göra dessa
+        corsConfiguration.setAllowedMethods(List.of(
+                "GET", "POST"
+        ));
+
+        //dem får skicka authorization för jwt och content type för möjlig json
+        corsConfiguration.setAllowedHeaders(List.of(
+                "Authorization", "Content-Type"
+        ));
+
+        UrlBasedCorsConfigurationSource urlSource = new UrlBasedCorsConfigurationSource();
+        urlSource.registerCorsConfiguration("/**", corsConfiguration);
+
+        return urlSource;
     }
 
     @Bean
