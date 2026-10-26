@@ -72,9 +72,9 @@ The application uses environment variables to configure database connections, RS
 ## JWT Config
 | Property name | Production | Local |
 |---|---|---|
-| `app.jwt.issuer` | Production: https://auth-server-group7.onrender.com  | Local: http://localhost:9000 |
-| `app.jwt.expiration-minutes` | Production: 60 | Local: 60 |
-| `app.jwt.key-id` | Production: webshop-auth-key-1 | Local: webshop-auth-key-1 |
+| `app.jwt.issuer` | https://auth-server-group7.onrender.com  | http://localhost:9000 |
+| `app.jwt.expiration-minutes` | 60 | 60 |
+| `app.jwt.key-id` | webshop-auth-key-1 | webshop-auth-key-1 |
 
 Do not commit password, keys or other sensitive information directly to the repository.
 
