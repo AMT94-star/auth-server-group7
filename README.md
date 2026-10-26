@@ -37,7 +37,7 @@ The private RSA key never leaves auth service and should never be shared or publ
 - CI with Github Actions
 
 ## Databases
-The application uses various databases depending on the enivornment. H2 for local environment and PostgreSQL for production. Their connection details are configured through environment variables.
+### The application uses various databases depending on the enivornment. H2 for local environment and PostgreSQL for production. Their connection details are configured through environment variables.
 ----------
 ### Local H2
 spring.datasource.url=jdbc:h2:file:./data/authdb
@@ -56,15 +56,15 @@ GET /appusers          - retrieves registered accounts, admin accessibility only
 ## Environment variables
 The application uses environment variables to configure database connections, RSA keys and adminstrate credentials.
 
-PORT                   - application port(default is 9000)
-RENDER_URL             - postgresql jdbc connection url
-RENDER_USER            - postgresql username
-RENDER_PWD             - pastgresql password
-JWT_PUBLIC_KEY         - public RSA key used for JWT verification
-JWT_PRIVATE_KEY        - private RSA key used for signing JWTs
-ADMIN_USERNAME         - administrator username
-ADMIN_PASSWORD         - administrator password
-SPRING_PROFILES_ACTIVE - active spring profile
+| PORT |application port(default is 9000) |
+| RENDER_URL | postgresql jdbc connection url |
+| RENDER_USER | postgresql username |
+| RENDER_PWD | pastgresql password |
+| JWT_PUBLIC_KEY | public RSA key used for JWT verification |
+| JWT_PRIVATE_KEY | private RSA key used for signing JWTs |
+| ADMIN_USERNAME | administrator username |
+| ADMIN_PASSWORD | administrator password |
+| SPRING_PROFILES_ACTIVE |active spring profile |
 
 ## JWT Config
 app.jwt.issuer                 Production: https://auth-server-group7.onrender.com  Local: http://localhost:9000
