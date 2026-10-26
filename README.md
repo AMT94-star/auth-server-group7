@@ -40,23 +40,26 @@ The private RSA key never leaves auth service and should never be shared or publ
 The application uses various databases depending on the enivornment. H2 for local environment and PostgreSQL for production. Their connection details are configured through environment variables.
 
 ### Local H2
-spring.datasource.url=jdbc:h2:file:./data/authdb
-spring.datasource.username=sa
-spring.datasource.password=
+- spring.datasource.url=jdbc:h2:file:./data/authdb
+- spring.datasource.username=sa
+- spring.datasource.password=
 
 The H2 database allows a developer to run the service without postgresql. The database stores id, username, BCrypt password and user role.
 
 ## API endpoints
-POST /auth/register    - registers a new user
-POST /auth/login       - authenticates a user and generates JWT
-GET  /auth/jwks        - retrieves public RSA keys for JWT verification
-POST /appusers/admins  - creates new admin accounts, admin accessibility only
-GET /appusers          - retrieves registered accounts, admin accessibility only
+| Method | Endpoint | Functionality
+|---|---|---|
+| POST | `/auth/register` | registers a new user |
+| POST | `/auth/login` | authenticates a user and generates JWT |
+| GET | `/auth/jwks` | retrieves public RSA keys for JWT verification |
+| POST | `/appusers/admins` | creates new admin accounts, admin accessibility only |
+| GET | `/appusers` | retrieves registered accounts, admin accessibility only |
 
 ## Environment variables
 The application uses environment variables to configure database connections, RSA keys and adminstrate credentials.
+| Variable name | Functionality |
 |---|---|
-| `PORT` |application port(default is 9000) |
+| `PORT` | application port(default is 9000) |
 | `RENDER_URL` | postgresql jdbc connection url |
 | `RENDER_USER` | postgresql username |
 | `RENDER_PWD` | pastgresql password |
@@ -67,6 +70,7 @@ The application uses environment variables to configure database connections, RS
 | `SPRING_PROFILES_ACTIVE` | active spring profile |
 
 ## JWT Config
+| Property name | Production | Local |
 |---|---|---|
 | `app.jwt.issuer` | Production: https://auth-server-group7.onrender.com  | Local: http://localhost:9000 |
 | `app.jwt.expiration-minutes` | Production: 60 | Local: 60 |
