@@ -37,8 +37,8 @@ The private RSA key never leaves auth service and should never be shared or publ
 - CI with Github Actions
 
 ## Databases
-### The application uses various databases depending on the enivornment. H2 for local environment and PostgreSQL for production. Their connection details are configured through environment variables.
-----------
+The application uses various databases depending on the enivornment. H2 for local environment and PostgreSQL for production. Their connection details are configured through environment variables.
+
 ### Local H2
 spring.datasource.url=jdbc:h2:file:./data/authdb
 spring.datasource.username=sa
