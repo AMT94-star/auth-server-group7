@@ -55,50 +55,52 @@ GET /appusers          - retrieves registered accounts, admin accessibility only
 
 ## Environment variables
 The application uses environment variables to configure database connections, RSA keys and adminstrate credentials.
-
-| PORT |application port(default is 9000) |
-| RENDER_URL | postgresql jdbc connection url |
-| RENDER_USER | postgresql username |
-| RENDER_PWD | pastgresql password |
-| JWT_PUBLIC_KEY | public RSA key used for JWT verification |
-| JWT_PRIVATE_KEY | private RSA key used for signing JWTs |
-| ADMIN_USERNAME | administrator username |
-| ADMIN_PASSWORD | administrator password |
-| SPRING_PROFILES_ACTIVE |active spring profile |
+|---|---|
+| `PORT` |application port(default is 9000) |
+| `RENDER_URL` | postgresql jdbc connection url |
+| `RENDER_USER` | postgresql username |
+| `RENDER_PWD` | pastgresql password |
+| `JWT_PUBLIC_KEY` | public RSA key used for JWT verification |
+| `JWT_PRIVATE_KEY` | private RSA key used for signing JWTs |
+| `ADMIN_USERNAME` | administrator username |
+| `ADMIN_PASSWORD` | administrator password |
+| `SPRING_PROFILES_ACTIVE` | active spring profile |
 
 ## JWT Config
-app.jwt.issuer                 Production: https://auth-server-group7.onrender.com  Local: http://localhost:9000
-app.jwt.expiration-minutes     Production: 60                                       Local: 60
-app.jwt.key-id                 Production: webshop-auth-key-1                       Local: webshop-auth-key-1
+|---|---|---|
+| `app.jwt.issuer` | Production: https://auth-server-group7.onrender.com  | Local: http://localhost:9000 |
+| `app.jwt.expiration-minutes` | Production: 60 | Local: 60 |
+| `app.jwt.key-id` | Production: webshop-auth-key-1 | Local: webshop-auth-key-1 |
 
 Do not commit password, keys or other sensitive information directly to the repository.
 
 ## Run locally
--Clone the repository
--Configure environment variables: ADMIN_PASSWORD, ADMIN_USERNAME, SPRING_PROFILES_ACTIVE, JWT_PUBLIC_KEY, JWT_PRIVATE_KEY
--Generate RSA key pairs for signing and verifying JWTs. Do not commit private key to GitHub
--Start the application using the local Spring profile. Windows: mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=local  macOS/Linux: ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+- Clone the repository
+- Configure environment variables: ADMIN_PASSWORD, ADMIN_USERNAME, SPRING_PROFILES_ACTIVE, JWT_PUBLIC_KEY, JWT_PRIVATE_KEY
+- Generate RSA key pairs for signing and verifying JWTs. Do not commit private key to GitHub
+- Start the application using the local Spring profile.
+- Windows: mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=local  macOS/Linux: ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 
 ## Local access to the application
-Local base url: http://localhost:9000
-Swagger: http://localhost:9000/swagger-ui/index.html
-JWKS endpoint: http://localhost:9000/auth/jwks
-H2 database accessibility: http://localhost:9000/h2-console
+- Local base url: http://localhost:9000
+- Swagger: http://localhost:9000/swagger-ui/index.html
+- JWKS endpoint: http://localhost:9000/auth/jwks
+- H2 database accessibility: http://localhost:9000/h2-console
 
 ## Production access to the application
-Base Url: https://auth-server-group7.onrender.com
-Swagger: https://auth-server-group7.onrender.com/swagger-ui/index.html
-JWKS endpoint: https://auth-server-group7.onrender.com/auth/jwks
-Docker hub: https://hub.docker.com/r/94059102/auth-server-group7
+- Base Url: https://auth-server-group7.onrender.com
+- Swagger: https://auth-server-group7.onrender.com/swagger-ui/index.html
+- JWKS endpoint: https://auth-server-group7.onrender.com/auth/jwks
+- Docker hub: https://hub.docker.com/r/94059102/auth-server-group7
 
 ## Relevant repositories
 The webshop consists of several repositories connected in a loose scalable way.
-Auth Service: https://github.com/AMT94-star/auth-server-group7
-Product Service: https://github.com/johan969/product-service
-Order Service: https://github.com/eritho91/order-service
-Email Service: https://github.com/elquinox/email-microservice
-API Gateway Service: https://github.com/eritho91/gateway
-Frontend: https://github.com/johan969/webshop-frontend
+- Auth Service: https://github.com/AMT94-star/auth-server-group7
+- Product Service: https://github.com/johan969/product-service
+- Order Service: https://github.com/eritho91/order-service
+- Email Service: https://github.com/elquinox/email-microservice
+- API Gateway Service: https://github.com/eritho91/gateway
+- Frontend: https://github.com/johan969/webshop-frontend
 
 ## Project information
 This project has been developed as part of a group project in the Java developer program at ITHS in Stockholm, Sweden.
