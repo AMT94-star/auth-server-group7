@@ -107,4 +107,4 @@ The webshop consists of several repositories connected in a loose scalable way.
 - Frontend: https://github.com/johan969/webshop-frontend
 
 ## Project information
-This project has been developed as part of a group project in the Java developer program at ITHS in Stockholm, Sweden.
+This service has been developed by me as part of a group project in the Java developer program at ITHS in Stockholm, Sweden.
