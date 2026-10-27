@@ -62,7 +62,7 @@ The application uses environment variables to configure database connections, RS
 | `PORT` | application port(default is 9000) |
 | `RENDER_URL` | postgresql jdbc connection url |
 | `RENDER_USER` | postgresql username |
-| `RENDER_PWD` | pastgresql password |
+| `RENDER_PWD` | postgresql password |
 | `JWT_PUBLIC_KEY` | public RSA key used for JWT verification |
 | `JWT_PRIVATE_KEY` | private RSA key used for signing JWTs |
 | `ADMIN_USERNAME` | administrator username |
